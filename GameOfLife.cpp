@@ -8,12 +8,14 @@ GameOfLife::GameOfLife()
   InitializeGrid(10,10);
   rowNum = 10;
   colNum = 10;
+  fillInitialGrid();
 }
 GameOfLife::GameOfLife(int n, int m)
 {
   InitializeGrid(n,m);
   rowNum = n;
   colNum = m;
+  fillInitialGrid();
 }
 GameOfLife::~GameOfLife()
 {
@@ -43,4 +45,19 @@ void GameOfLife::fillInitialGrid()
       theGrid[i][j] = '-';
     }
   }
+}
+void GameOfLife::fillGridLine(std::string str)
+{
+  for(int i = 0; i <str.length();++i)
+  {
+    char currentChar = str[i];
+    theGrid[currentFillingLine][i] = currentChar;
+  }
+  currentFillingLine ++;
+}
+void GameOfLife::resetMemberVars()
+{
+  int currentFillingLine = 0;
+  int rowNum = 0;
+  int colNum =0;
 }

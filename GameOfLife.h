@@ -5,6 +5,11 @@
 
 class GameOfLife
 {
+  int currentFillingLine = 0;
+  char** theGrid;
+  int rowNum = 0;
+  int colNum =0;
+
 public:
   GameOfLife();
   GameOfLife(int n,int m);
@@ -12,10 +17,11 @@ public:
 
   void printCurrentGrid();
   void fillInitialGrid();
+  //works for individual lines
+  void fillGridLine(std::string str);
+  void resetMemberVars();
+  //used for fillGriline to keep track of which line we are filling
 
-  char** theGrid;
-  int rowNum;
-  int colNum;
 
 
 private:
