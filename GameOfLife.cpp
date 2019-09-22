@@ -51,13 +51,13 @@ void GameOfLife::fillGridLine(std::string str)
   for(int i = 0; i <str.length();++i)
   {
     char currentChar = str[i];
-    theGrid[currentFillingLine][i] = currentChar;
+    theGrid[numLine][i] = currentChar;
   }
-  currentFillingLine ++;
+  numLine ++;
 }
 void GameOfLife::resetMemberVars()
 {
-  int currentFillingLine = 0;
+  int numLine = 0;
   int rowNum = 0;
   int colNum =0;
 }
