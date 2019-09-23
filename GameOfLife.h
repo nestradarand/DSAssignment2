@@ -5,7 +5,7 @@
 
 class GameOfLife
 {
-  int numLine = 0;
+  int numLine = 1;
   char** theGrid;
   char** secondGrid;
   int rowNum = 0;
@@ -25,6 +25,9 @@ public:
   void calculateNextGen();
 
   void makeShadowCopy();
+
+  void printFull();//for debugging to vew buffer
+
 
 
 private:

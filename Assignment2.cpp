@@ -9,18 +9,30 @@ int main(int argc, char** argv)
 {
   GameOfLife* theGame = new GameOfLife(5,5);
   string theStrings[5];
-  theStrings[0] = "----x";
-  theStrings[1] = "--x--";
-  theStrings[2]= "-xx--";
+  theStrings[0] = "-xx--";
+  theStrings[1] = "-x-x-";
+  theStrings[2]= "--xx-";
   theStrings[3] = "-----";
-  theStrings[4]= "xxxxx";
+  theStrings[4]= "xx-xx";
 
   for(int i =0;i<5;i++)
     theGame ->fillGridLine(theStrings[i]);
-  theGame -> printCurrentGrid();
-  theGame -> calculateNextGen();
-  theGame -> printSecondGrid();
+  for(int i = 0;i<20;i++)
+  {
+    cout << "Generation: " << i <<endl;
+    theGame -> calculateNextGen();
+    theGame -> printCurrentGrid();
+  }
+
+
+
+
+
+  // theGame -> calculateNextGen();
+  // theGame -> printCurrentGrid();
   delete theGame;
+
+
 
 
 

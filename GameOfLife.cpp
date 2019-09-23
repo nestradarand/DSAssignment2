@@ -9,6 +9,7 @@ GameOfLife::GameOfLife()
   rowNum = 10;
   colNum = 10;
   fillInitialGrid();
+  makeShadowCopy();
 }
 GameOfLife::GameOfLife(int n, int m)
 {
@@ -30,14 +31,16 @@ GameOfLife::~GameOfLife()
 }
 void GameOfLife::InitializeGrid(int n, int m)
 {
-  theGrid = new char*[n];
-  for(int i =0; i < m;++i)
-    theGrid[i] = new char[m];
+  int i = (n+2);
+  int j = (m+2);
+  theGrid = new char*[i];
+  for(int p =0; p < i;++p)
+    theGrid[p] = new char[j];
 }
 void GameOfLife::printCurrentGrid()
 {
-  for (int i = 0; i < rowNum; ++i) {   // for each row
-    for (int j = 0; j < colNum; ++j) { // for each column
+  for (int i = 1; i < rowNum+1; ++i) {   // for each row
+    for (int j = 1; j < colNum+1; ++j) { // for each column
       std::cout << theGrid[i][j];
     }
     std::cout << "\n";
@@ -45,8 +48,8 @@ void GameOfLife::printCurrentGrid()
 }
 void GameOfLife::printSecondGrid()
 {
-  for (int i = 0; i < rowNum; ++i) {   // for each row
-    for (int j = 0; j < colNum; ++j) { // for each column
+  for (int i = 0; i < rowNum+2; ++i) {   // for each row
+    for (int j = 0; j < colNum+2; ++j) { // for each column
       std::cout << secondGrid[i][j];
     }
     std::cout << "\n";
@@ -54,9 +57,9 @@ void GameOfLife::printSecondGrid()
 }
 void GameOfLife::fillInitialGrid()
 {
-  for (int i = 0; i < rowNum; ++i)
+  for (int i = 0; i < rowNum+2; ++i)
   {   // for each row
-    for (int j = 0; j < colNum; ++j)
+    for (int j = 0; j < colNum+2; ++j)
     { // for each column
       theGrid[i][j] = '-';
     }
@@ -67,7 +70,7 @@ void GameOfLife::fillGridLine(std::string str)
   for(int i = 0; i <str.length();++i)
   {
     char currentChar = str[i];
-    theGrid[numLine][i] = currentChar;
+    theGrid[numLine][i+1] = currentChar;
   }
   numLine ++;
 }
@@ -81,11 +84,12 @@ void GameOfLife::calculateNextGen()
 {
   makeShadowCopy();
   //segmentation fault in here somehow
-  for(int n = 0; n<rowNum;n++)
+  for(int n = 1; n<rowNum+1;++n)
   {
-    for(int m = 0;m<rowNum;m++)
+    for(int m = 1;m<colNum+1;++m)
     {
       int neighborNum = 0;
+
       if(theGrid[n-1][m-1] == 'x')
         neighborNum ++;
       if(theGrid[n-1][m] == 'x')
@@ -104,34 +108,47 @@ void GameOfLife::calculateNextGen()
         neighborNum ++;
       if(neighborNum <= 1)
         secondGrid[n][m] = '-';
-      else if(neighborNum == 3)
+      if(neighborNum == 3)
         secondGrid[n][m] = 'x';
-      else if(neighborNum >=4)
+      if(neighborNum >=4)
         secondGrid[n][m] = '-';
     }
   }
   saveShadow();
 }
+//works
 void GameOfLife::makeShadowCopy()
 {
-  secondGrid =  new char*[rowNum];
-  for(int i =0;i<colNum;i++)
-    secondGrid[i] = new char[colNum];
-  for (int i = 0; i < rowNum; ++i)
+  int i = (rowNum+2);
+  int j = (colNum+2);
+  secondGrid = new char*[i];
+  for(int p =0; p < i;++p)
+    secondGrid[p] = new char[j];
+  for (int i = 0; i < rowNum+2; ++i)
   {   // for each row
-    for (int j = 0; j < colNum; ++j)
+    for (int j = 0; j < colNum+2; ++j)
     { // for each column
       secondGrid[i][j] = theGrid[i][j];
     }
   }
 }
+//works
 void GameOfLife::saveShadow()
 {
-  for(int i = 0; i<rowNum;++i)
+  for(int i = 0; i<rowNum+2;++i)
   {
-    for(int j = 0;j<colNum;++j)
+    for(int j = 0;j<colNum+2;++j)
     {
       theGrid[i][j] = secondGrid[i][j];
     }
+  }
+}
+void GameOfLife::printFull()
+{
+  for (int i = 0; i < rowNum+2; ++i) {   // for each row
+    for (int j = 0; j < colNum+2; ++j) { // for each column
+      std::cout << theGrid[i][j];
+    }
+    std::cout << "\n";
   }
 }
