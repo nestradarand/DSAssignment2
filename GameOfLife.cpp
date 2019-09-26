@@ -11,6 +11,7 @@ GameOfLife::GameOfLife()
   rowNum = 10;
   colNum = 10;
   arrayHelper -> fillGrid(theGrid,12,12);
+  makeShadowCopy();
 }
 GameOfLife::GameOfLife(int n, int m)
 {
@@ -18,32 +19,24 @@ GameOfLife::GameOfLife(int n, int m)
   rowNum = n;
   colNum = m;
   arrayHelper -> fillGrid(theGrid,n+2,m+2);
+  makeShadowCopy();
 }
-GameOfLife::GameOfLife(char** &newGrid, int n, int m)
+GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
 {
-  arrayHelper -> initializeGrid(theGrid,n+2,m+2);
   rowNum = n;
   colNum = m;
-  arrayHelper ->copyArray(newGrid,theGrid,n+2,m+2);
+  theGrid = newGrid;
 }
 GameOfLife::~GameOfLife()
 {
   //clean up both arrays
-  for(int i = 0; i< rowNum; ++ i)
+  for(int i = 0; i< rowNum+2; ++ i)
     delete [] theGrid[i];
   delete [] theGrid;
-  for(int i = 0; i< rowNum; ++ i)
+  for(int i = 0; i< rowNum+2; ++ i)
     delete [] secondGrid[i];
   delete [] secondGrid;
   delete arrayHelper;
-}
-void GameOfLife::InitializeGrid(int n, int m)
-{
-  int i = (n+2);
-  int j = (m+2);
-  theGrid = new char*[i];
-  for(int p =0; p < i;++p)
-    theGrid[p] = new char[j];
 }
 void GameOfLife::printCurrentGrid()
 {
@@ -52,16 +45,6 @@ void GameOfLife::printCurrentGrid()
 void GameOfLife::printSecondGrid()
 {
   arrayHelper -> printSelectGrid(secondGrid,rowNum+1,colNum+1);
-}
-void GameOfLife::fillInitialGrid()
-{
-  for (int i = 0; i < rowNum+2; ++i)
-  {   // for each row
-    for (int j = 0; j < colNum+2; ++j)
-    { // for each column
-      theGrid[i][j] = '-';
-    }
-  }
 }
 void GameOfLife::fillGridLine(std::string str)
 {
@@ -170,7 +153,6 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
           {
             theGrid[i-1][j-1] = 'X';
             theGrid[i][j-1] = 'X';
-            continue;
           }
           if(j == colNum)
           {
@@ -185,7 +167,6 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
           {
             theGrid[i-1][j-1] = '-';
             theGrid[i][j-1] = '-';
-            continue;
           }
           if(j == colNum)
           {
@@ -242,6 +223,90 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
         theGrid[rowCount][colNum+1] = 'X';
       else
         theGrid[rowCount][colNum+1] = '-';
+    }
+  }
+}
+
+void GameOfLife::fillDoughnutGrid()
+{
+  int rowCount = 0;
+  for(int i =1;i<rowNum+1;i++)//handles the first row
+  {
+    rowCount ++;
+    if(i==1)
+    {
+      for(int j = 1; j<colNum+1;++j)
+      {
+        char currentChar = theGrid[i][j];
+        if(currentChar== 'X')
+        {
+          theGrid[rowNum+1][j] = 'X';
+          if(j == 1)
+          {
+            theGrid[i][colNum+1] = 'X';
+          }
+          if(j == colNum)
+          {
+            theGrid[i][0] = 'X';
+          }
+        }
+        else
+        {
+          theGrid[rowNum+1][j] = '-';
+          if(j == 1)
+          {
+            theGrid[i][colNum+1] = '-';
+          }
+          if(j == colNum)
+          {
+            theGrid[i][0] = '-';
+          }
+        }
+      }
+    }
+    else if(i == rowNum)
+    {
+      for(int j = 1; j<colNum+1;++j)
+      {
+        char currentChar = theGrid[i][j];
+        if(currentChar== 'X')
+        {
+          theGrid[0][j] = 'X';
+          if(j == 1)
+          {
+            theGrid[i][colNum+1] = 'X';
+          }
+          else if(j == colNum)
+          {
+            theGrid[i][0] = 'X';
+          }
+        }
+        else
+        {
+          theGrid[0][j] = '-';
+          if(j == 1)
+          {
+            theGrid[i][colNum+1] = '-';
+          }
+          else if(j == colNum)
+          {
+            theGrid[i][0] = '-';
+          }
+        }
+      }
+    }
+    else
+    {
+      char firstColumnChar = theGrid[rowCount][1];
+      char lastColumnChar = theGrid[rowCount][colNum];
+      if(firstColumnChar == 'X')
+        theGrid[rowCount][colNum+1] = 'X';
+      else
+        theGrid[rowCount][colNum+1] = '-';
+      if(lastColumnChar == 'X')
+        theGrid[rowCount][0] = 'X';
+      else
+        theGrid[rowCount][0] = '-';
     }
   }
 }

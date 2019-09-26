@@ -1,10 +1,12 @@
 #ifndef ARRAY_HELPER_H
 #define ARRAY_HELPER_H
 #include <iostream>
+#include <string>
 
 
 class ArrayHelper
 {
+  int numLine = 1;
 public:
   ArrayHelper();
   ~ArrayHelper();
@@ -14,6 +16,7 @@ public:
   void printSelectGrid(char** &theArray, int n,int m);
   void initializeGrid(char** &emptyArray,int n, int m);
   void fillGrid(char** &grid,int n, int m);
+  void fillGridLine(char** &gridToFill,std::string str);
 
 };
 #endif

@@ -28,6 +28,7 @@ public:
   void resetMemberVars();
   void calculateNextGen();
   void fillMirrorGrid();
+  void fillDoughnutGrid();
 
   void makeShadowCopy();
 

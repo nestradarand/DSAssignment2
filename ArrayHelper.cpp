@@ -14,7 +14,7 @@ ArrayHelper::~ArrayHelper()
 }
 void ArrayHelper::deleteArray(char** &toDelete, int length)
 {
-  for(int i = 0; i< length; ++ i)
+  for(int i = 0; i< length; ++i)
     delete [] toDelete[i];
   delete [] toDelete;
 }
@@ -59,4 +59,13 @@ void ArrayHelper::fillGrid(char** &grid,int n, int m)
       grid[i][j] = '-';
     }
   }
+}
+void ArrayHelper::fillGridLine(char** &gridToFill,string str)
+{
+  for(int i = 0; i <str.length();++i)
+  {
+    char currentChar = str[i];
+    gridToFill[numLine][i+1] = currentChar;
+  }
+  numLine ++;
 }

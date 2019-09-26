@@ -12,32 +12,58 @@ using namespace std;
 int main(int argc, char** argv)
 {
 
-  GameOfLife* theGame = new GameOfLife(5,5);
-  string theStrings[5];
+  ArrayHelper* newHelper = new ArrayHelper();
+  string theStrings[4];
   theStrings[0] = "X---X";
   theStrings[1] = "X---X";
   theStrings[2]= "X---X";
   theStrings[3] = "X---X";
-  theStrings[4]= "X---X";
 
-  for(int i =0;i<5;++i)
-    theGame ->fillGridLine(theStrings[i]);
-  theGame -> fillMirrorGrid();
-  cout<< "Initial Population:" << endl;
-  theGame -> printCurrentGrid();
+  int rows = 3;
+  int cols = 3;
+
+  // char** tempGrid;
+  // newHelper -> initializeGrid(tempGrid,rows,cols);
+  // cout << "Success" << endl;
+  // newHelper -> fillGrid(tempGrid,rows,cols);
+  // newHelper -> printGrid(tempGrid,rows,cols);
+  GameOfLife* theGame = new GameOfLife(rows,cols);
+  cout << "made" << endl;
+  for(int i = 0;i<rows;++i)
+    theGame -> fillGridLine(theStrings[i]);
   theGame -> printFull();
-  for(int i = 0;i<3;i++)
-  {
-    cout << "Generation: " << i <<endl;
-    theGame -> calculateNextGen();
-    theGame ->printCurrentGrid();
-    theGame -> fillMirrorGrid();
-    theGame -> printFull();
-  }
 
 
-
+  cout << "reached the end" << endl;
+  // newHelper -> deleteArray(tempGrid,rows);
+  delete newHelper;
   delete theGame;
+  // delete theGame;
+  // for(int i =0;i<6;++i)
+  //   newHelper -> fillGridLine(tempGrid,theStrings[i]);
+  // newHelper -> printGrid(tempGrid,8,7);
+
+
+
+  //
+  // theGame -> printFull();
+  //
+  // for(int i =0;i<5;++i)
+  //   theGame ->fillGridLine(theStrings[i]);
+  // theGame -> fillDoughnutGrid();
+  // cout<< "Initial Population:" << endl;
+  // theGame -> printCurrentGrid();
+  // theGame -> printFull();
+  // for(int i = 0;i<3;i++)
+  // {
+  //   cout << "Generation: " << i <<endl;
+  //   theGame -> calculateNextGen();
+  //   theGame ->printCurrentGrid();
+  //   theGame -> fillDoughnutGrid();
+  //   theGame -> printFull();
+  // }
+
+
 
 ////testing starts here
 
