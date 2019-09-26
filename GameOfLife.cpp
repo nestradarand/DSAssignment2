@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "ArrayHelper.h"
+#include <math.h>
 
 using namespace std;
 
@@ -100,18 +101,9 @@ void GameOfLife::makeShadowCopy()
 {
   int i = (rowNum+2);
   int j = (colNum+2);
-  // secondGrid = new char*[i];
-  // for(int p =0; p < i;++p)
-  //   secondGrid[p] = new char[j];
   arrayHelper -> initializeGrid(secondGrid,i,j);//works
   arrayHelper -> copyArray(theGrid,secondGrid,i,j);//works
-  // for (int i = 0; i < rowNum+2; ++i)
-  // {   // for each row
-  //   for (int j = 0; j < colNum+2; ++j)
-  //   { // for each column
-  //     secondGrid[i][j] = theGrid[i][j];
-  //   }
-  // }
+
 }
 //works
 void GameOfLife::saveShadow()
@@ -119,13 +111,7 @@ void GameOfLife::saveShadow()
   int i = (rowNum+2);
   int j = (colNum+2);
   arrayHelper -> copyArray(secondGrid,theGrid,i,j);
-  // for(int i = 0; i<rowNum+2;++i)
-  // {
-  //   for(int j = 0;j<colNum+2;++j)
-  //   {
-  //     theGrid[i][j] = secondGrid[i][j];
-  //   }
-  // }
+
 }
 void GameOfLife::printFull()
 {
@@ -134,7 +120,6 @@ void GameOfLife::printFull()
 }
 void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sides
 {
-  // theGrid[1][colNum+1] = 'X';//not sure why this is here
   int rowCount = 0;
   for(int i =1;i<rowNum+1;i++)//handles the first row
   {
@@ -305,6 +290,26 @@ void GameOfLife::fillDoughnutGrid()
         theGrid[rowCount][0] = 'X';
       else
         theGrid[rowCount][0] = '-';
+    }
+  }
+}
+void GameOfLife::createRandomPopulation(float density)//works
+{
+  srand(time(0));
+  for(int i = 1; i< rowNum+1;++i)
+  {
+    float perRowCount = floor(float(colNum) * density);
+    cout <<perRowCount<<endl;
+    for(int j = 1;j<colNum+1;++j)
+    {
+      float randSelecter = float(rand())/float(RAND_MAX);
+      if(randSelecter >=.5&&perRowCount >0)
+      {
+        theGrid[i][j] = 'X';
+        perRowCount --;
+      }
+      else
+        theGrid[i][j] = '-';
     }
   }
 }

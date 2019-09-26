@@ -34,6 +34,8 @@ public:
 
   void printFull();//for debugging to vew buffer
 
+  void createRandomPopulation(float density);
+
 
 
 

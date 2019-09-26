@@ -2,6 +2,7 @@
 #include <iostream>
 #include "GameOfLife.h"
 #include "ArrayHelper.h"
+#include "GameRunner.h"
 #include <fstream>
 
 using namespace std;
@@ -16,9 +17,10 @@ int main(int argc, char** argv)
   cout<< "This game simulates the lifecylce of bacteria." <<endl;
   cout << "First and foremost, would you like to provide a file to simulate with?" <<endl;
   cout<< "Type 'n' for no or 'y' for yes" <<endl;
-  char response;
+  GameOfLife* theGame;
+  char response,mode;
   bool withFile,pauses,outputToFile;
-  string fileName,x;
+  string fileName,inContent,saveFile;
   int length,width;
   float density;
 
@@ -61,15 +63,20 @@ int main(int argc, char** argv)
     pauses = false;
 
   cout<<"Lastly, would you like to have the outputs printed to the screen or saved to a file?"<<endl;
+  cout << "Enter 'p' for print or 's' for save"<<endl;
   cin >>response;
-  while(response != 'n'&&response != 'y')
+  while(response != 'p'&&response != 's')
   {
     cout<< "Invalid command entered. Try again." <<endl;
     cin >> response;
   }
-  if(response  == 'y')
+  if(response  == 's')
+  {
     outputToFile = true;
-  else if(response == 'n')
+    cout << "Please enter the name of the file you wish to save to:" <<endl;
+    cin >>saveFile;
+  }
+  else if(response == 'p')
     outputToFile = false;
 
   if(!withFile)
@@ -82,12 +89,43 @@ int main(int argc, char** argv)
     cout<< "Now enter the initial density of the initial population." <<endl;
     cout << "Please enter it as a number between 0 and 1" <<endl;
     cin >> density;
+    theGame = new GameOfLife(length,width);
+    theGame -> createRandomPopulation(density);
   }
   if(withFile)
   {
+    cout << "Reading file contents"<<endl;
     inputStream >>length;
     inputStream >>width;
+    theGame = new GameOfLife(length,width);
+    cout<<"Constructed" <<endl;
+    while(inputStream >> inContent)
+      theGame ->fillGridLine(inContent);
   }
+  cout<< "Lastly, enter what game mode you wish to have:" << endl;
+  cout << "Enter 'c' for classic, 'm' for mirror mode, or 'd' for doughnut mode"<<endl;
+  cin >> mode;
+  while(mode != 'c'&&mode != 'm' && mode != 'd')
+  {
+    cout<< "Invalid command entered. Try again." <<endl;
+    cin >> mode;
+  }
+  if(mode == 'c')
+  {
+
+  }
+
+
+
+
+
+
+
+
+  delete theGame;
+  // delete runner;
+  // inputStream.close();
+  return 0;
 
 
 
@@ -96,7 +134,7 @@ int main(int argc, char** argv)
 
 
   // string theStrings[4];
-  // theStrings[0] = "X---X";
+  // theStrings[0] = "inContent---X";
   // theStrings[1] = "X---X";
   // theStrings[2]= "X---X";
   // theStrings[3] = "X---X";
@@ -144,6 +182,5 @@ int main(int argc, char** argv)
   //   theGame -> fillDoughnutGrid();
   //   theGame -> printFull();
   // }
-  inputStream.close();
-  return 0;
+
 }
