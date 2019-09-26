@@ -30,8 +30,11 @@ public:
 
 
 
+
+
 private:
   void InitializeGrid(int n, int m);
   void saveShadow();
+
 };
 #endif

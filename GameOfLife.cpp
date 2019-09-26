@@ -19,6 +19,7 @@ GameOfLife::GameOfLife(int n, int m)
   fillInitialGrid();
   makeShadowCopy();
 }
+
 GameOfLife::~GameOfLife()
 {
   //clean up both arrays
@@ -90,26 +91,26 @@ void GameOfLife::calculateNextGen()
     {
       int neighborNum = 0;
 
-      if(theGrid[n-1][m-1] == 'x')
+      if(theGrid[n-1][m-1] == 'X')
         neighborNum ++;
-      if(theGrid[n-1][m] == 'x')
+      if(theGrid[n-1][m] == 'X')
         neighborNum ++;
-      if(theGrid[n-1][m+1] == 'x')
+      if(theGrid[n-1][m+1] == 'X')
         neighborNum ++;
-      if(theGrid[n][m-1] == 'x')
+      if(theGrid[n][m-1] == 'X')
         neighborNum ++;
-      if(theGrid[n][m+1] == 'x')
+      if(theGrid[n][m+1] == 'X')
         neighborNum ++;
-      if(theGrid[n+1][m-1] == 'x')
+      if(theGrid[n+1][m-1] == 'X')
         neighborNum ++;
-      if(theGrid[n+1][m] == 'x')
+      if(theGrid[n+1][m] == 'X')
         neighborNum ++;
-      if(theGrid[n+1][m+1] == 'x')
+      if(theGrid[n+1][m+1] == 'X')
         neighborNum ++;
       if(neighborNum <= 1)
         secondGrid[n][m] = '-';
       if(neighborNum == 3)
-        secondGrid[n][m] = 'x';
+        secondGrid[n][m] = 'X';
       if(neighborNum >=4)
         secondGrid[n][m] = '-';
     }
