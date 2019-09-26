@@ -3,27 +3,29 @@
 #include <string>
 #include "ArrayHelper.h"
 
+using namespace std;
 
 GameOfLife::GameOfLife()
 {
-  InitializeGrid(10,10);
+  arrayHelper -> initializeGrid(theGrid,12,12);
   rowNum = 10;
   colNum = 10;
-  arrayHelper -> fillGrid(theGrid,10,10);
-  makeShadowCopy();
+  arrayHelper -> fillGrid(theGrid,12,12);
 }
 GameOfLife::GameOfLife(int n, int m)
 {
-  InitializeGrid(n,m);
+  arrayHelper -> initializeGrid(theGrid,n+2,m+2);
   rowNum = n;
   colNum = m;
-  fillInitialGrid();
-  makeShadowCopy();
+  arrayHelper -> fillGrid(theGrid,n+2,m+2);
 }
-// GameOfLife::GameOfLife(char** &theArray,int n, int m)
-// {
-//   InitializeGrid(&theArray,n,m);
-// }
+GameOfLife::GameOfLife(char** &newGrid, int n, int m)
+{
+  arrayHelper -> initializeGrid(theGrid,n+2,m+2);
+  rowNum = n;
+  colNum = m;
+  arrayHelper ->copyArray(newGrid,theGrid,n+2,m+2);
+}
 GameOfLife::~GameOfLife()
 {
   //clean up both arrays
@@ -146,14 +148,16 @@ void GameOfLife::saveShadow()
 }
 void GameOfLife::printFull()
 {
+  cout<< "Full Grid Debug:" <<endl;
   arrayHelper -> printGrid(theGrid,rowNum+2,colNum+2);
 }
 void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sides
 {
   // theGrid[1][colNum+1] = 'X';//not sure why this is here
-
+  int rowCount = 0;
   for(int i =1;i<rowNum+1;i++)//handles the first row
   {
+    rowCount ++;
     if(i==1)
     {
       for(int j = 1; j<colNum+2;++j)
@@ -176,7 +180,7 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
           }
         }
       }
-    if(i == rowNum)
+    else if(i == rowNum)
     {
       for(int j = 1; j<colNum+2;++j)
       {
@@ -191,11 +195,20 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
           }
           else if(j == colNum)
           {
-            theGrid[i-1][j+1] = 'X';
+            theGrid[i+1][j+1] = 'X';
             theGrid[i][j+1] = 'X';
           }
         }
       }
+    }
+    else
+    {
+      char firstColumnChar = theGrid[rowCount][1];
+      char lastColumnChar = theGrid[rowCount][colNum];
+      if(firstColumnChar == 'X')
+        theGrid[rowCount][0] = 'X';
+      if(lastColumnChar == 'X')
+        theGrid[rowCount][colNum+1] = 'X';
     }
   }
 }

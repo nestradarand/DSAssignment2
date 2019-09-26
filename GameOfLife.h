@@ -16,6 +16,8 @@ class GameOfLife
 public:
   GameOfLife();
   GameOfLife(int n,int m);
+  GameOfLife(char** &newGrid, int n, int m);
+
   ~GameOfLife();
 
   void printCurrentGrid();

@@ -14,23 +14,23 @@ int main(int argc, char** argv)
 
   GameOfLife* theGame = new GameOfLife(5,5);
   string theStrings[5];
-  theStrings[0] = "---X-";
-  theStrings[1] = "-----";
-  theStrings[2]= "-XX--";
-  theStrings[3] = "-----";
-  theStrings[4]= "XXXXX";
+  theStrings[0] = "X---X";
+  theStrings[1] = "X---X";
+  theStrings[2]= "X---X";
+  theStrings[3] = "X---X";
+  theStrings[4]= "X---X";
 
   for(int i =0;i<5;++i)
     theGame ->fillGridLine(theStrings[i]);
   theGame -> fillMirrorGrid();
   cout<< "Initial Population:" << endl;
   theGame -> printFull();
-  for(int i = 0;i<10;i++)
+  for(int i = 0;i<3;i++)
   {
     cout << "Generation: " << i <<endl;
     theGame -> calculateNextGen();
     theGame -> fillMirrorGrid();
-    theGame -> printFull();
+    theGame -> printCurrentGrid();
   }
 
 
