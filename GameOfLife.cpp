@@ -153,3 +153,55 @@ void GameOfLife::printFull()
     std::cout << "\n";
   }
 }
+void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sides
+{
+  theGrid[1][colNum+1] = 'X';
+
+  for(int i =1;i<rowNum+1;i++)//handles the first row
+  {
+    if(i==1)
+    {
+      for(int j = 1; j<colNum+2;++j)
+      {
+        char currentChar = theGrid[i][j];
+        if(currentChar== 'X')
+        {
+          theGrid[i-1][j] = 'X';
+          if(j == 1)
+          {
+            theGrid[i-1][j-1] = 'X';
+            theGrid[i][j-1] = 'X';
+            continue;
+          }
+          if(j == colNum)
+          {
+            theGrid[i-1][j+1] = 'X';
+            theGrid[i][j+1] = 'X';
+          }
+          }
+        }
+      }
+    if(i == rowNum)
+    {
+      for(int j = 1; j<colNum+2;++j)
+      {
+        std::cout << j << std::endl;
+        char currentChar = theGrid[i][j];
+        if(currentChar== 'X')
+        {
+          theGrid[i+1][j] = 'X';
+          if(j == 1)
+          {
+            theGrid[i][j-1] = 'X';
+            theGrid[i+1][j-1] = 'X';
+          }
+          else if(j == colNum)
+          {
+            theGrid[i-1][j+1] = 'X';
+            theGrid[i][j+1] = 'X';
+          }
+        }
+      }
+    }
+  }
+}

@@ -23,6 +23,7 @@ public:
   void fillGridLine(std::string str);
   void resetMemberVars();
   void calculateNextGen();
+  void fillMirrorGrid();
 
   void makeShadowCopy();
 
