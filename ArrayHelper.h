@@ -17,6 +17,8 @@ public:
   void initializeGrid(char** &emptyArray,int n, int m);
   void fillGrid(char** &grid,int n, int m);
   void fillGridLine(char** &gridToFill,std::string str);
+  bool checkEquality(char** &firstGrid, char**& secondGrid,int n,int m);
+
 
 };
 #endif

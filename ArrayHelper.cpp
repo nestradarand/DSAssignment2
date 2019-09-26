@@ -69,3 +69,16 @@ void ArrayHelper::fillGridLine(char** &gridToFill,string str)
   }
   numLine ++;
 }
+//assumes both arrays have same length
+bool ArrayHelper::checkEquality(char** &firstGrid, char**& secondGrid,int n,int m)
+{
+  for(int i =0;i<n;++i)
+  {
+    for(int j = 0; j<m;++j)
+    {
+      if(firstGrid[i][j] != secondGrid[i][j])
+        return false;
+    }
+  }
+  return true;
+}
