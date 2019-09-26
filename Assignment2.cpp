@@ -19,8 +19,8 @@ int main(int argc, char** argv)
   theStrings[2]= "X---X";
   theStrings[3] = "X---X";
 
-  int rows = 3;
-  int cols = 3;
+  int rows = 4;
+  int cols = 5;
 
   // char** tempGrid;
   // newHelper -> initializeGrid(tempGrid,rows,cols);

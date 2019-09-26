@@ -11,7 +11,8 @@ GameOfLife::GameOfLife()
   rowNum = 10;
   colNum = 10;
   arrayHelper -> fillGrid(theGrid,12,12);
-  makeShadowCopy();
+  arrayHelper -> initializeGrid(secondGrid,12,12);
+  arrayHelper -> fillGrid(secondGrid,12,12);
 }
 GameOfLife::GameOfLife(int n, int m)
 {
@@ -19,7 +20,8 @@ GameOfLife::GameOfLife(int n, int m)
   rowNum = n;
   colNum = m;
   arrayHelper -> fillGrid(theGrid,n+2,m+2);
-  makeShadowCopy();
+  arrayHelper -> initializeGrid(secondGrid,n+2,m+2);
+  arrayHelper -> fillGrid(secondGrid,n+2,m+2);
 }
 GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
 {
@@ -30,12 +32,8 @@ GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
 GameOfLife::~GameOfLife()
 {
   //clean up both arrays
-  for(int i = 0; i< rowNum+2; ++ i)
-    delete [] theGrid[i];
-  delete [] theGrid;
-  for(int i = 0; i< rowNum+2; ++ i)
-    delete [] secondGrid[i];
-  delete [] secondGrid;
+  arrayHelper -> deleteArray(theGrid,rowNum+2);
+  arrayHelper -> deleteArray(secondGrid,rowNum+2);
   delete arrayHelper;
 }
 void GameOfLife::printCurrentGrid()
