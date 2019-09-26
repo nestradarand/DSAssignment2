@@ -1,6 +1,7 @@
 #include "GameOfLife.h"
 #include <iostream>
 #include <string>
+#include "ArrayHelper.h"
 
 
 GameOfLife::GameOfLife()
@@ -8,7 +9,7 @@ GameOfLife::GameOfLife()
   InitializeGrid(10,10);
   rowNum = 10;
   colNum = 10;
-  fillInitialGrid();
+  arrayHelper -> fillGrid(theGrid,10,10);
   makeShadowCopy();
 }
 GameOfLife::GameOfLife(int n, int m)
@@ -19,7 +20,10 @@ GameOfLife::GameOfLife(int n, int m)
   fillInitialGrid();
   makeShadowCopy();
 }
-
+// GameOfLife::GameOfLife(char** &theArray,int n, int m)
+// {
+//   InitializeGrid(&theArray,n,m);
+// }
 GameOfLife::~GameOfLife()
 {
   //clean up both arrays
@@ -29,6 +33,7 @@ GameOfLife::~GameOfLife()
   for(int i = 0; i< rowNum; ++ i)
     delete [] secondGrid[i];
   delete [] secondGrid;
+  delete arrayHelper;
 }
 void GameOfLife::InitializeGrid(int n, int m)
 {
@@ -40,21 +45,11 @@ void GameOfLife::InitializeGrid(int n, int m)
 }
 void GameOfLife::printCurrentGrid()
 {
-  for (int i = 1; i < rowNum+1; ++i) {   // for each row
-    for (int j = 1; j < colNum+1; ++j) { // for each column
-      std::cout << theGrid[i][j];
-    }
-    std::cout << "\n";
-  }
+  arrayHelper -> printSelectGrid(theGrid,rowNum+1,colNum+1);
 }
 void GameOfLife::printSecondGrid()
 {
-  for (int i = 0; i < rowNum+2; ++i) {   // for each row
-    for (int j = 0; j < colNum+2; ++j) { // for each column
-      std::cout << secondGrid[i][j];
-    }
-    std::cout << "\n";
-  }
+  arrayHelper -> printSelectGrid(secondGrid,rowNum+1,colNum+1);
 }
 void GameOfLife::fillInitialGrid()
 {
@@ -122,40 +117,40 @@ void GameOfLife::makeShadowCopy()
 {
   int i = (rowNum+2);
   int j = (colNum+2);
-  secondGrid = new char*[i];
-  for(int p =0; p < i;++p)
-    secondGrid[p] = new char[j];
-  for (int i = 0; i < rowNum+2; ++i)
-  {   // for each row
-    for (int j = 0; j < colNum+2; ++j)
-    { // for each column
-      secondGrid[i][j] = theGrid[i][j];
-    }
-  }
+  // secondGrid = new char*[i];
+  // for(int p =0; p < i;++p)
+  //   secondGrid[p] = new char[j];
+  arrayHelper -> initializeGrid(secondGrid,i,j);//works
+  arrayHelper -> copyArray(theGrid,secondGrid,i,j);//works
+  // for (int i = 0; i < rowNum+2; ++i)
+  // {   // for each row
+  //   for (int j = 0; j < colNum+2; ++j)
+  //   { // for each column
+  //     secondGrid[i][j] = theGrid[i][j];
+  //   }
+  // }
 }
 //works
 void GameOfLife::saveShadow()
 {
-  for(int i = 0; i<rowNum+2;++i)
-  {
-    for(int j = 0;j<colNum+2;++j)
-    {
-      theGrid[i][j] = secondGrid[i][j];
-    }
-  }
+  int i = (rowNum+2);
+  int j = (colNum+2);
+  arrayHelper -> copyArray(secondGrid,theGrid,i,j);
+  // for(int i = 0; i<rowNum+2;++i)
+  // {
+  //   for(int j = 0;j<colNum+2;++j)
+  //   {
+  //     theGrid[i][j] = secondGrid[i][j];
+  //   }
+  // }
 }
 void GameOfLife::printFull()
 {
-  for (int i = 0; i < rowNum+2; ++i) {   // for each row
-    for (int j = 0; j < colNum+2; ++j) { // for each column
-      std::cout << theGrid[i][j];
-    }
-    std::cout << "\n";
-  }
+  arrayHelper -> printGrid(theGrid,rowNum+2,colNum+2);
 }
 void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sides
 {
-  theGrid[1][colNum+1] = 'X';
+  // theGrid[1][colNum+1] = 'X';//not sure why this is here
 
   for(int i =1;i<rowNum+1;i++)//handles the first row
   {
@@ -185,7 +180,6 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
     {
       for(int j = 1; j<colNum+2;++j)
       {
-        std::cout << j << std::endl;
         char currentChar = theGrid[i][j];
         if(currentChar== 'X')
         {
