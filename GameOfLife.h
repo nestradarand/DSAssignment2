@@ -10,6 +10,7 @@ class GameOfLife
   int numLine = 1;
   char** theGrid;
   char** secondGrid;
+  char** previousGrid;
   int rowNum = 0;
   int colNum =0;
 
@@ -35,6 +36,7 @@ public:
   void printFull();//for debugging to vew buffer
 
   void createRandomPopulation(float density);
+  bool checkStability();
 
 
 

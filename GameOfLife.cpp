@@ -14,6 +14,8 @@ GameOfLife::GameOfLife()
   arrayHelper -> fillGrid(theGrid,12,12);
   arrayHelper -> initializeGrid(secondGrid,12,12);
   arrayHelper -> fillGrid(secondGrid,12,12);
+  arrayHelper -> initializeGrid(previousGrid,12,12);
+  arrayHelper -> fillGrid(previousGrid,12,12);
 }
 GameOfLife::GameOfLife(int n, int m)
 {
@@ -23,6 +25,8 @@ GameOfLife::GameOfLife(int n, int m)
   arrayHelper -> fillGrid(theGrid,n+2,m+2);
   arrayHelper -> initializeGrid(secondGrid,n+2,m+2);
   arrayHelper -> fillGrid(secondGrid,n+2,m+2);
+  arrayHelper -> initializeGrid(previousGrid,n+2,m+2);
+  arrayHelper -> fillGrid(previousGrid,n+2,m+2);
 }
 GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
 {
@@ -35,6 +39,7 @@ GameOfLife::~GameOfLife()
   //clean up both arrays
   arrayHelper -> deleteArray(theGrid,rowNum+2);
   arrayHelper -> deleteArray(secondGrid,rowNum+2);
+  arrayHelper -> deleteArray(previousGrid,rowNum+2);
   delete arrayHelper;
 }
 void GameOfLife::printCurrentGrid()
@@ -63,6 +68,7 @@ void GameOfLife::resetMemberVars()
 void GameOfLife::calculateNextGen()
 {
   makeShadowCopy();
+  arrayHelper -> copyArray(theGrid,previousGrid,rowNum+2,colNum+2);
   //segmentation fault in here somehow
   for(int n = 1; n<rowNum+1;++n)
   {
@@ -299,7 +305,6 @@ void GameOfLife::createRandomPopulation(float density)//works
   for(int i = 1; i< rowNum+1;++i)
   {
     float perRowCount = floor(float(colNum) * density);
-    cout <<perRowCount<<endl;
     for(int j = 1;j<colNum+1;++j)
     {
       float randSelecter = float(rand())/float(RAND_MAX);
@@ -312,4 +317,8 @@ void GameOfLife::createRandomPopulation(float density)//works
         theGrid[i][j] = '-';
     }
   }
+}
+bool GameOfLife::checkStability()//works returns false (0) if unstable
+{
+  return arrayHelper ->checkEquality(theGrid,previousGrid,rowNum+2,colNum+2);
 }

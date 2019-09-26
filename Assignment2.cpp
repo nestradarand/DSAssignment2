@@ -21,7 +21,7 @@ int main(int argc, char** argv)
   char response,mode;
   bool withFile,pauses,outputToFile;
   string fileName,inContent,saveFile;
-  int length,width;
+  int length,width,genCount=0;
   float density;
 
   ifstream inputStream;
@@ -110,9 +110,19 @@ int main(int argc, char** argv)
     cout<< "Invalid command entered. Try again." <<endl;
     cin >> mode;
   }
+  // GameRunner* runner = new GameRunner(theGame,pauses);
   if(mode == 'c')
   {
-
+    while(theGame -> checkStability() == 0)
+    {
+      cout<< "Generation " <<genCount<< endl;
+      theGame -> printCurrentGrid();
+      if(pauses)
+        system("read -p 'Press Enter to continue...' var");
+      theGame -> calculateNextGen();
+      genCount++;
+    }
+    cout<<"Population stable, simulation aborted"<<endl;
   }
 
 
@@ -121,8 +131,8 @@ int main(int argc, char** argv)
 
 
 
-
   delete theGame;
+  // delete runner;
   // delete runner;
   // inputStream.close();
   return 0;
