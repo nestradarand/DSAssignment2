@@ -177,9 +177,24 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
             theGrid[i-1][j+1] = 'X';
             theGrid[i][j+1] = 'X';
           }
+        }
+        else
+        {
+          theGrid[i-1][j] = '-';
+          if(j == 1)
+          {
+            theGrid[i-1][j-1] = '-';
+            theGrid[i][j-1] = '-';
+            continue;
+          }
+          if(j == colNum)
+          {
+            theGrid[i-1][j+1] = '-';
+            theGrid[i][j+1] = '-';
           }
         }
       }
+    }
     else if(i == rowNum)
     {
       for(int j = 1; j<colNum+2;++j)
@@ -199,6 +214,20 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
             theGrid[i][j+1] = 'X';
           }
         }
+        else
+        {
+          theGrid[i+1][j] = '-';
+          if(j == 1)
+          {
+            theGrid[i][j-1] = '-';
+            theGrid[i+1][j-1] = '-';
+          }
+          else if(j == colNum)
+          {
+            theGrid[i+1][j+1] = '-';
+            theGrid[i][j+1] = '-';
+          }
+        }
       }
     }
     else
@@ -207,8 +236,12 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
       char lastColumnChar = theGrid[rowCount][colNum];
       if(firstColumnChar == 'X')
         theGrid[rowCount][0] = 'X';
+      else
+        theGrid[rowCount][0] = '-';
       if(lastColumnChar == 'X')
         theGrid[rowCount][colNum+1] = 'X';
+      else
+        theGrid[rowCount][colNum+1] = '-';
     }
   }
 }

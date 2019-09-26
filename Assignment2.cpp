@@ -24,13 +24,15 @@ int main(int argc, char** argv)
     theGame ->fillGridLine(theStrings[i]);
   theGame -> fillMirrorGrid();
   cout<< "Initial Population:" << endl;
+  theGame -> printCurrentGrid();
   theGame -> printFull();
   for(int i = 0;i<3;i++)
   {
     cout << "Generation: " << i <<endl;
     theGame -> calculateNextGen();
+    theGame ->printCurrentGrid();
     theGame -> fillMirrorGrid();
-    theGame -> printCurrentGrid();
+    theGame -> printFull();
   }
 
 
