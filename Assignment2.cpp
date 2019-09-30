@@ -124,6 +124,32 @@ int main(int argc, char** argv)
     }
     cout<<"Population stable, simulation aborted"<<endl;
   }
+  if(mode == 'm')
+  {
+    while(theGame -> checkStability() ==0)
+    {
+      theGame -> fillMirrorGrid();
+      cout << "Generation " << genCount <<endl;
+      theGame ->printCurrentGrid();
+      if(pauses)
+        system("read -p 'Press Enter to continue...' var");
+      theGame -> calculateNextGen();
+      genCount ++;
+    }
+  }
+  if(mode == 'd')
+  {
+    while(theGame -> checkStability() ==0)
+    {
+      cout<< "Generation " << genCount << endl;
+      theGame -> fillDoughnutGrid();
+      theGame ->printCurrentGrid();
+      if(pauses)
+        system("read -p 'Press Enter to continue...' var");
+      theGame ->calculateNextGen();
+      genCount ++;
+    }
+  }
 
 
 
