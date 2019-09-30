@@ -37,6 +37,7 @@ public:
 
   void createRandomPopulation(float density);
   bool checkStability();
+  char** returnCurrentGrid();
 
 
 

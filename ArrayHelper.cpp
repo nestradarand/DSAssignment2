@@ -18,7 +18,7 @@ void ArrayHelper::deleteArray(char** &toDelete, int length)
     delete [] toDelete[i];
   delete [] toDelete;
 }
-void ArrayHelper::copyArray(char** &initArray,char** &copyArray,int n,int m)
+void ArrayHelper::copyArray(char** initArray,char** &copyArray,int n,int m)
 {
   for(int i = 0; i<n;++i)
   {
@@ -70,7 +70,7 @@ void ArrayHelper::fillGridLine(char** &gridToFill,string str)
   numLine ++;
 }
 //assumes both arrays have same length
-bool ArrayHelper::checkEquality(char** &firstGrid, char**& secondGrid,int n,int m)
+bool ArrayHelper::checkEquality(char** firstGrid, char** secondGrid,int n,int m)
 {
   for(int i =0;i<n;++i)
   {

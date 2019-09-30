@@ -36,10 +36,22 @@ GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
 }
 GameOfLife::~GameOfLife()
 {
-  //clean up both arrays
-  arrayHelper -> deleteArray(theGrid,rowNum+2);
-  arrayHelper -> deleteArray(secondGrid,rowNum+2);
-  arrayHelper -> deleteArray(previousGrid,rowNum+2);
+  for(int i = 0; i< rowNum+2; ++i)
+    delete [] theGrid[i];
+  delete [] theGrid;
+  cout << "first grid deleted"<<endl;
+  for(int i = 0; i< rowNum+2; ++i)
+    delete [] secondGrid[i];
+  delete [] secondGrid;
+  cout << "Second grid deleted" << endl;
+  for(int i = 0; i< rowNum+2; ++i)
+    delete [] previousGrid[i];
+  delete [] previousGrid;
+  cout << "Thrid grid deleted" << endl;
+  //clean up all three arrays
+  // arrayHelper -> deleteArray(theGrid,rowNum+2);
+  // arrayHelper -> deleteArray(secondGrid,rowNum+2);
+  // arrayHelper -> deleteArray(previousGrid,rowNum+2);
   delete arrayHelper;
 }
 void GameOfLife::printCurrentGrid()
@@ -109,7 +121,6 @@ void GameOfLife::makeShadowCopy()
   int j = (colNum+2);
   arrayHelper -> initializeGrid(secondGrid,i,j);//works
   arrayHelper -> copyArray(theGrid,secondGrid,i,j);//works
-
 }
 //works
 void GameOfLife::saveShadow()
@@ -117,7 +128,6 @@ void GameOfLife::saveShadow()
   int i = (rowNum+2);
   int j = (colNum+2);
   arrayHelper -> copyArray(secondGrid,theGrid,i,j);
-
 }
 void GameOfLife::printFull()
 {
@@ -321,4 +331,8 @@ void GameOfLife::createRandomPopulation(float density)//works
 bool GameOfLife::checkStability()//works returns false (0) if unstable
 {
   return arrayHelper ->checkEquality(theGrid,previousGrid,rowNum+2,colNum+2);
+}
+char** GameOfLife::returnCurrentGrid()
+{
+  return theGrid;
 }

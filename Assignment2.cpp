@@ -19,6 +19,7 @@ int main(int argc, char** argv)
   cout<< "Type 'n' for no or 'y' for yes" <<endl;
   GameOfLife* theGame;
   char response,mode;
+  char** holder;
   bool withFile,pauses,outputToFile;
   string fileName,inContent,saveFile;
   int length,width,genCount=0;
@@ -38,6 +39,7 @@ int main(int argc, char** argv)
     cin >>fileName;
     withFile = true;
     inputStream.open(fileName);
+    cout<<"File successfully opened" << endl;
     //ensures successful input stream established
     //reference: stack overflow
     if(!inputStream)
@@ -49,7 +51,7 @@ int main(int argc, char** argv)
   else if(response == 'n')
     withFile = false;
 
-  cout << "Now, would you liked to have pauses in between generations of the simuilation?"<<endl;
+  cout << "Now, would you liked to have pauses in between generations of the simulation?"<<endl;
   cout<< "Type 'n' for no or 'y' for yes" <<endl;
   cin >>response;
   while(response != 'n'&&response != 'y')
@@ -75,6 +77,12 @@ int main(int argc, char** argv)
     outputToFile = true;
     cout << "Please enter the name of the file you wish to save to:" <<endl;
     cin >>saveFile;
+    outputStream.open(saveFile);
+    if(!outputStream)
+    {
+      cout << "Error occurred trying to read file." << endl;
+      exit(1);
+    }
   }
   else if(response == 'p')
     outputToFile = false;
@@ -119,6 +127,19 @@ int main(int argc, char** argv)
       theGame -> printCurrentGrid();
       if(pauses)
         system("read -p 'Press Enter to continue...' var");
+      if(outputToFile)
+      {
+        char **  holder = theGame->returnCurrentGrid();
+        outputStream << "Generation " <<genCount<< "\r\n";
+        for(int i = 1;i<length+1;++i)
+        {
+          for(int j = 1; j <width+1;++j)
+          {
+            outputStream << holder[i][j];
+          }
+          outputStream << "\r\n";
+        }
+      }
       theGame -> calculateNextGen();
       genCount++;
     }
@@ -133,6 +154,19 @@ int main(int argc, char** argv)
       theGame ->printCurrentGrid();
       if(pauses)
         system("read -p 'Press Enter to continue...' var");
+      if(outputToFile)
+      {
+        char **  holder = theGame->returnCurrentGrid();
+        outputStream << "Generation " <<genCount<< "\r\n";
+        for(int i = 1;i<length+1;++i)
+        {
+          for(int j = 1; j <width+1;++j)
+          {
+            outputStream << holder[i][j];
+          }
+          outputStream << "\r\n";
+        }
+      }
       theGame -> calculateNextGen();
       genCount ++;
     }
@@ -146,6 +180,19 @@ int main(int argc, char** argv)
       theGame ->printCurrentGrid();
       if(pauses)
         system("read -p 'Press Enter to continue...' var");
+      if(outputToFile)
+      {
+        holder = theGame->returnCurrentGrid();
+        outputStream << "Generation " <<genCount<< "\r\n";
+        for(int i = 1;i<length+1;++i)
+        {
+          for(int j = 1; j <width+1;++j)
+          {
+            outputStream << holder[i][j];
+          }
+          outputStream << "\r\n";
+        }
+      }
       theGame ->calculateNextGen();
       genCount ++;
     }
@@ -156,67 +203,14 @@ int main(int argc, char** argv)
 
 
 
-
+  delete holder;
   delete theGame;
-  // delete runner;
-  // delete runner;
-  // inputStream.close();
+  outputStream.close();
+  inputStream.close();
   return 0;
 
 
 
-  //
-  // ArrayHelper* newHelper = new ArrayHelper();
 
-
-  // string theStrings[4];
-  // theStrings[0] = "inContent---X";
-  // theStrings[1] = "X---X";
-  // theStrings[2]= "X---X";
-  // theStrings[3] = "X---X";
-  //
-  // int rows = 4;
-  // int cols = 5;
-  //
-  // // char** tempGrid;
-  // // newHelper -> initializeGrid(tempGrid,rows,cols);
-  // // cout << "Success" << endl;
-  // // newHelper -> fillGrid(tempGrid,rows,cols);
-  // // newHelper -> printGrid(tempGrid,rows,cols);
-  // GameOfLife* theGame = new GameOfLife(rows,cols);
-  // cout << "made" << endl;
-  // for(int i = 0;i<rows;++i)
-  //   theGame -> fillGridLine(theStrings[i]);
-  // theGame -> printFull();
-  //
-  //
-  // cout << "reached the end" << endl;
-  // // newHelper -> deleteArray(tempGrid,rows);
-  // delete newHelper;
-  // delete theGame;
-  // delete theGame;
-  // for(int i =0;i<6;++i)
-  //   newHelper -> fillGridLine(tempGrid,theStrings[i]);
-  // newHelper -> printGrid(tempGrid,8,7);
-
-
-
-  //
-  // theGame -> printFull();
-  //
-  // for(int i =0;i<5;++i)
-  //   theGame ->fillGridLine(theStrings[i]);
-  // theGame -> fillDoughnutGrid();
-  // cout<< "Initial Population:" << endl;
-  // theGame -> printCurrentGrid();
-  // theGame -> printFull();
-  // for(int i = 0;i<3;i++)
-  // {
-  //   cout << "Generation: " << i <<endl;
-  //   theGame -> calculateNextGen();
-  //   theGame ->printCurrentGrid();
-  //   theGame -> fillDoughnutGrid();
-  //   theGame -> printFull();
-  // }
 
 }
