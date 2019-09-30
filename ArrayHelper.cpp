@@ -12,10 +12,12 @@ ArrayHelper::~ArrayHelper()
 {
 
 }
-void ArrayHelper::deleteArray(char** &toDelete, int length)
+void ArrayHelper::deleteArray(char** toDelete, int length)
 {
   for(int i = 0; i< length; ++i)
+  {
     delete [] toDelete[i];
+  }
   delete [] toDelete;
 }
 void ArrayHelper::copyArray(char** initArray,char** &copyArray,int n,int m)
@@ -46,11 +48,13 @@ void ArrayHelper::printSelectGrid(char** &theArray, int n,int m)
     cout << "\n";
   }
 }
-void ArrayHelper::initializeGrid(char** &emptyArray,int n, int m)
+void ArrayHelper::initializeGrid(char** &newArray,int n, int m)
 {
-  emptyArray = new char*[n];
-  for(int i =0; i < m;++i)
-    emptyArray[i] = new char[m];
+  newArray = new char*[n];
+  for(int i = 0; i<n;++i)
+  {
+    newArray[i] = new char[m];
+  }
 }
 void ArrayHelper::fillGrid(char** &grid,int n, int m)
 {

@@ -27,6 +27,13 @@ GameOfLife::GameOfLife(int n, int m)
   arrayHelper -> fillGrid(secondGrid,n+2,m+2);
   arrayHelper -> initializeGrid(previousGrid,n+2,m+2);
   arrayHelper -> fillGrid(previousGrid,n+2,m+2);
+
+  //for debugging
+  arrayHelper -> printGrid(theGrid,n+2,m+2);
+  cout << endl;
+  arrayHelper -> printGrid(secondGrid,n+2,m+2);
+  cout<<endl;
+  arrayHelper -> printGrid(previousGrid,n+2,m+2);
 }
 GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
 {
@@ -36,22 +43,9 @@ GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
 }
 GameOfLife::~GameOfLife()
 {
-  for(int i = 0; i< rowNum+2; ++i)
-    delete [] theGrid[i];
-  delete [] theGrid;
-  cout << "first grid deleted"<<endl;
-  for(int i = 0; i< rowNum+2; ++i)
-    delete [] secondGrid[i];
-  delete [] secondGrid;
-  cout << "Second grid deleted" << endl;
-  for(int i = 0; i< rowNum+2; ++i)
-    delete [] previousGrid[i];
-  delete [] previousGrid;
-  cout << "Thrid grid deleted" << endl;
-  //clean up all three arrays
-  // arrayHelper -> deleteArray(theGrid,rowNum+2);
-  // arrayHelper -> deleteArray(secondGrid,rowNum+2);
-  // arrayHelper -> deleteArray(previousGrid,rowNum+2);
+  arrayHelper -> deleteArray(theGrid,rowNum+2);
+  arrayHelper -> deleteArray(secondGrid,rowNum+2);
+  arrayHelper -> deleteArray(previousGrid,rowNum+2);
   delete arrayHelper;
 }
 void GameOfLife::printCurrentGrid()

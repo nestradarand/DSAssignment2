@@ -10,11 +10,11 @@ class ArrayHelper
 public:
   ArrayHelper();
   ~ArrayHelper();
-  void deleteArray(char** &toDelete, int length);
+  void deleteArray(char** toDelete, int length);
   void copyArray(char** initArray, char** &copyArray,int n, int m);
   void printGrid(char** &theArray, int n,int m);
   void printSelectGrid(char** &theArray, int n,int m);
-  void initializeGrid(char** &emptyArray,int n, int m);
+  void initializeGrid(char** &newArray,int n, int m);
   void fillGrid(char** &grid,int n, int m);
   void fillGridLine(char** &gridToFill,std::string str);
   bool checkEquality(char** firstGrid, char** secondGrid,int n,int m);

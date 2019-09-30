@@ -12,7 +12,21 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-
+  // ArrayHelper* thehelper  = new ArrayHelper();
+  // char** newArray;
+  // int n = 5, m = 3;
+  // // newArray = new char*[n];
+  // // for(int i = 0; i<n;++i)
+  // // {
+  // //   newArray[i] = new char[m];
+  // // }
+  // thehelper -> initializeGrid(newArray,n,m);
+  // cout << "init"<<endl;
+  // thehelper -> fillGrid(newArray,n,m);
+  // cout << "fill" <<endl;
+  // thehelper -> printGrid(newArray,n,m);
+  // thehelper -> deleteArray(newArray,n);
+  // delete thehelper;
   cout << "Welcome to the Game of Life"<<endl;
   cout<< "This game simulates the lifecylce of bacteria." <<endl;
   cout << "First and foremost, would you like to provide a file to simulate with?" <<endl;
@@ -170,6 +184,7 @@ int main(int argc, char** argv)
       theGame -> calculateNextGen();
       genCount ++;
     }
+    cout<<"Population stable, simulation aborted"<<endl;
   }
   if(mode == 'd')
   {
@@ -196,6 +211,7 @@ int main(int argc, char** argv)
       theGame ->calculateNextGen();
       genCount ++;
     }
+    cout<<"Population stable, simulation aborted"<<endl;
   }
 
 
@@ -203,7 +219,6 @@ int main(int argc, char** argv)
 
 
 
-  delete holder;
   delete theGame;
   outputStream.close();
   inputStream.close();
