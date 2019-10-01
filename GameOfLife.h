@@ -27,6 +27,8 @@ class GameOfLife
   char** previousGrid;
   int rowNum = 0;
   int colNum =0;
+  //number used to determine when to create a copy of the previous generation
+  int checkNumber = 1;
 
 public:
   //constructors
