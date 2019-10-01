@@ -1,3 +1,11 @@
+/*
+Name: Noah Estrada-Rand
+Student ID#: 2272490
+Chapman email: estra146@mail.chapman.edu
+Course Number and Section: CPSC-350-01
+Assignment: Assignment 2 Game Of Life
+*/
+//the following are included to help with array operations, random number generation and input outputs
 #include "GameOfLife.h"
 #include <iostream>
 #include <string>
@@ -6,6 +14,14 @@
 
 using namespace std;
 
+/*NOTICE: many parameters have 2 spaces added to the row and column values in order
+to account for the extra grid space surrounding the grid displayed to the user.
+This extra "ring" around the main grid is used to avoid segmentation faults when
+checking neighbors on the outer rims of the grid.  Moreover, it is used to implement
+the mirror and doughnut modes.*/
+
+//default constructor initializing default grid, secondGrid for shadow copies,
+//and previous grid for stability detection
 GameOfLife::GameOfLife()
 {
   arrayHelper -> initializeGrid(theGrid,12,12);
@@ -17,6 +33,8 @@ GameOfLife::GameOfLife()
   arrayHelper -> initializeGrid(previousGrid,12,12);
   arrayHelper -> fillGrid(previousGrid,12,12);
 }
+//constructor taking dimensions for new grid and intitializes main grid, second grid,
+// and previous grid reference
 GameOfLife::GameOfLife(int n, int m)
 {
   arrayHelper -> initializeGrid(theGrid,n+2,m+2);
@@ -27,20 +45,9 @@ GameOfLife::GameOfLife(int n, int m)
   arrayHelper -> fillGrid(secondGrid,n+2,m+2);
   arrayHelper -> initializeGrid(previousGrid,n+2,m+2);
   arrayHelper -> fillGrid(previousGrid,n+2,m+2);
-
-  //for debugging
-  arrayHelper -> printGrid(theGrid,n+2,m+2);
-  cout << endl;
-  arrayHelper -> printGrid(secondGrid,n+2,m+2);
-  cout<<endl;
-  arrayHelper -> printGrid(previousGrid,n+2,m+2);
 }
-GameOfLife::GameOfLife(char** &newGrid, int n, int m)//works
-{
-  rowNum = n;
-  colNum = m;
-  theGrid = newGrid;
-}
+//deconstructor deletes the arrayhelper object and deletes all member variables storing
+//the main grid, the secondary grid, and the previous grid
 GameOfLife::~GameOfLife()
 {
   arrayHelper -> deleteArray(theGrid,rowNum+2);
@@ -48,14 +55,20 @@ GameOfLife::~GameOfLife()
   arrayHelper -> deleteArray(previousGrid,rowNum+2);
   delete arrayHelper;
 }
+//prints the main grid, excludes the ring around the main grid
+//thus the +1 parameters are used to ignore the first row and first column
 void GameOfLife::printCurrentGrid()
 {
   arrayHelper -> printSelectGrid(theGrid,rowNum+1,colNum+1);
 }
+//used for debugging, does the same as previous method but for the secondary grid
 void GameOfLife::printSecondGrid()
 {
   arrayHelper -> printSelectGrid(secondGrid,rowNum+1,colNum+1);
 }
+//used to fill the lines of the main grid
+//needs to be used with for loop externally to work properly
+//numline is a member variable to keep track of iterations
 void GameOfLife::fillGridLine(std::string str)
 {
   for(int i = 0; i <str.length();++i)
@@ -65,17 +78,15 @@ void GameOfLife::fillGridLine(std::string str)
   }
   numLine ++;
 }
-void GameOfLife::resetMemberVars()
-{
-  int numLine = 0;
-  int rowNum = 0;
-  int colNum =0;
-}
+/*this method calculates the next generation of the main grid
+first a shadow copy is made then the contents of the main grid are copied
+to the previous grid to help detect stability of the Population
+Next all neighrbors are tested for and changes are made accordingly to the
+second grid.  Then the second grid is saved back to the first grid*/
 void GameOfLife::calculateNextGen()
 {
   makeShadowCopy();
   arrayHelper -> copyArray(theGrid,previousGrid,rowNum+2,colNum+2);
-  //segmentation fault in here somehow
   for(int n = 1; n<rowNum+1;++n)
   {
     for(int m = 1;m<colNum+1;++m)
@@ -108,33 +119,34 @@ void GameOfLife::calculateNextGen()
   }
   saveShadow();
 }
-//works
+//makes shadow copy of the main grid to the second grid
 void GameOfLife::makeShadowCopy()
 {
   int i = (rowNum+2);
   int j = (colNum+2);
-  arrayHelper -> initializeGrid(secondGrid,i,j);//works
   arrayHelper -> copyArray(theGrid,secondGrid,i,j);//works
 }
-//works
+//saves shadow copy to the main grid
 void GameOfLife::saveShadow()
 {
   int i = (rowNum+2);
   int j = (colNum+2);
   arrayHelper -> copyArray(secondGrid,theGrid,i,j);
 }
+//prints the full grid including the buffer ring; used for debugging
 void GameOfLife::printFull()
 {
   cout<< "Full Grid Debug:" <<endl;
   arrayHelper -> printGrid(theGrid,rowNum+2,colNum+2);
 }
-void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sides
+//populates the outer ring of the grid with the resulting cells from the mirror mode rules
+void GameOfLife::fillMirrorGrid()
 {
   int rowCount = 0;
-  for(int i =1;i<rowNum+1;i++)//handles the first row
+  for(int i =1;i<rowNum+1;i++)
   {
     rowCount ++;
-    if(i==1)
+    if(i==1)//handles first row
     {
       for(int j = 1; j<colNum+2;++j)
       {
@@ -142,18 +154,18 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
         if(currentChar== 'X')
         {
           theGrid[i-1][j] = 'X';
-          if(j == 1)
+          if(j == 1) //handles upper right corner
           {
             theGrid[i-1][j-1] = 'X';
             theGrid[i][j-1] = 'X';
           }
-          if(j == colNum)
+          if(j == colNum) //handles upper left corner
           {
             theGrid[i-1][j+1] = 'X';
             theGrid[i][j+1] = 'X';
           }
         }
-        else
+        else //handles the event that there are no populated cells
         {
           theGrid[i-1][j] = '-';
           if(j == 1)
@@ -169,7 +181,7 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
         }
       }
     }
-    else if(i == rowNum)
+    else if(i == rowNum) //handles last row
     {
       for(int j = 1; j<colNum+2;++j)
       {
@@ -177,18 +189,18 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
         if(currentChar== 'X')
         {
           theGrid[i+1][j] = 'X';
-          if(j == 1)
+          if(j == 1) //handles upper left corner
           {
             theGrid[i][j-1] = 'X';
             theGrid[i+1][j-1] = 'X';
           }
-          else if(j == colNum)
+          else if(j == colNum) //handles upper right corner
           {
             theGrid[i+1][j+1] = 'X';
             theGrid[i][j+1] = 'X';
           }
         }
-        else
+        else//handles the event that the cells arent populated
         {
           theGrid[i+1][j] = '-';
           if(j == 1)
@@ -204,6 +216,8 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
         }
       }
     }
+    //for all rows in between the first and last, only the first and last cells
+    //of each row are considered
     else
     {
       char firstColumnChar = theGrid[rowCount][1];
@@ -219,19 +233,19 @@ void GameOfLife::fillMirrorGrid()//works for corners and top and bottom need sid
     }
   }
 }
-
+//populates the outer buffer ring with the results of the doughnut rules
 void GameOfLife::fillDoughnutGrid()
 {
   int rowCount = 0;
-  for(int i =1;i<rowNum+1;i++)//handles the first row
+  for(int i =1;i<rowNum+1;i++)
   {
     rowCount ++;
-    if(i==1)
+    if(i==1) //handles the first row
     {
       for(int j = 1; j<colNum+1;++j)
       {
         char currentChar = theGrid[i][j];
-        if(currentChar== 'X')
+        if(currentChar== 'X')//if a cell is populated it fills the corresponding cell in the buffer
         {
           theGrid[rowNum+1][j] = 'X';
           if(j == 1)
@@ -257,7 +271,7 @@ void GameOfLife::fillDoughnutGrid()
         }
       }
     }
-    else if(i == rowNum)
+    else if(i == rowNum) //handles the last row
     {
       for(int j = 1; j<colNum+1;++j)
       {
@@ -288,6 +302,8 @@ void GameOfLife::fillDoughnutGrid()
         }
       }
     }
+    //following statment handles all rows in between first and last
+    //only looks at first and last entry on the main grid
     else
     {
       char firstColumnChar = theGrid[rowCount][1];
@@ -303,29 +319,33 @@ void GameOfLife::fillDoughnutGrid()
     }
   }
 }
-void GameOfLife::createRandomPopulation(float density)//works
+//creates a random population in the main grid based on a given density
+void GameOfLife::createRandomPopulation(float density)
 {
+  //set the seed for the random number
   srand(time(0));
-  for(int i = 1; i< rowNum+1;++i)
+  for(int i = 1; i< rowNum+1;++i)//for each row in the main grid
   {
-    float perRowCount = floor(float(colNum) * density);
-    for(int j = 1;j<colNum+1;++j)
+    float perRowCount = floor(float(colNum) * density);//gets count for each row based on density
+    for(int j = 1;j<colNum+1;++j)//iterates through each column
     {
       float randSelecter = float(rand())/float(RAND_MAX);
-      if(randSelecter >=.5&&perRowCount >0)
+      if(randSelecter >=.5&&perRowCount >0)//randomly selects if cell gets populated
       {
         theGrid[i][j] = 'X';
-        perRowCount --;
+        perRowCount --;//decrement row count so that a given row at most only has the desired density
       }
       else
         theGrid[i][j] = '-';
     }
   }
 }
-bool GameOfLife::checkStability()//works returns false (0) if unstable
+//checks if the main grid is equal to the previous generation
+bool GameOfLife::checkStability()// returns false (0) if unstable
 {
   return arrayHelper ->checkEquality(theGrid,previousGrid,rowNum+2,colNum+2);
 }
+//returns the main grid as a char** to be used outside of this class
 char** GameOfLife::returnCurrentGrid()
 {
   return theGrid;

@@ -12,21 +12,6 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-  // ArrayHelper* thehelper  = new ArrayHelper();
-  // char** newArray;
-  // int n = 5, m = 3;
-  // // newArray = new char*[n];
-  // // for(int i = 0; i<n;++i)
-  // // {
-  // //   newArray[i] = new char[m];
-  // // }
-  // thehelper -> initializeGrid(newArray,n,m);
-  // cout << "init"<<endl;
-  // thehelper -> fillGrid(newArray,n,m);
-  // cout << "fill" <<endl;
-  // thehelper -> printGrid(newArray,n,m);
-  // thehelper -> deleteArray(newArray,n);
-  // delete thehelper;
   cout << "Welcome to the Game of Life"<<endl;
   cout<< "This game simulates the lifecylce of bacteria." <<endl;
   cout << "First and foremost, would you like to provide a file to simulate with?" <<endl;
@@ -65,8 +50,8 @@ int main(int argc, char** argv)
   else if(response == 'n')
     withFile = false;
 
-  cout << "Now, would you liked to have pauses in between generations of the simulation?"<<endl;
-  cout<< "Type 'n' for no or 'y' for yes" <<endl;
+  cout << "Now, would you like to have pauses in between generations of the simulation for easier viewing?"<<endl;
+  cout<< "Type 'n' for no or 'y' for yes:" <<endl;
   cin >>response;
   while(response != 'n'&&response != 'y')
   {
@@ -78,8 +63,8 @@ int main(int argc, char** argv)
   else if(response == 'n')
     pauses = false;
 
-  cout<<"Lastly, would you like to have the outputs printed to the screen or saved to a file?"<<endl;
-  cout << "Enter 'p' for print or 's' for save"<<endl;
+  cout<<"Lastly, would you like to have the outputs only printed to the screen or also saved to a file?"<<endl;
+  cout << "Enter 'p' for print only or 's' to save the outputs as well:"<<endl;
   cin >>response;
   while(response != 'p'&&response != 's')
   {
@@ -157,7 +142,7 @@ int main(int argc, char** argv)
       theGame -> calculateNextGen();
       genCount++;
     }
-    cout<<"Population stable, simulation aborted"<<endl;
+    cout<<"Population stable"<<endl;
   }
   if(mode == 'm')
   {
@@ -184,7 +169,7 @@ int main(int argc, char** argv)
       theGame -> calculateNextGen();
       genCount ++;
     }
-    cout<<"Population stable, simulation aborted"<<endl;
+    cout<<"Population stable"<<endl;
   }
   if(mode == 'd')
   {
@@ -211,8 +196,10 @@ int main(int argc, char** argv)
       theGame ->calculateNextGen();
       genCount ++;
     }
-    cout<<"Population stable, simulation aborted"<<endl;
+    cout<<"Population stable"<<endl;
   }
+  system("read -p 'Press Enter to exit the simulation...' var");
+
 
 
 

@@ -64,15 +64,7 @@ void ArrayHelper::fillGrid(char** &grid,int n, int m)
     }
   }
 }
-void ArrayHelper::fillGridLine(char** &gridToFill,string str)
-{
-  for(int i = 0; i <str.length();++i)
-  {
-    char currentChar = str[i];
-    gridToFill[numLine][i+1] = currentChar;
-  }
-  numLine ++;
-}
+
 //assumes both arrays have same length
 bool ArrayHelper::checkEquality(char** firstGrid, char** secondGrid,int n,int m)
 {
