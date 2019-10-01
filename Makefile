@@ -1,4 +1,3 @@
-# A simple Makefile for CPSC 350
 # Assumes the following directory hierarchy:
 # Assignment X
 # 	src
@@ -7,7 +6,7 @@
 #this Makefile goes in the src directory
 
 #change this to the correct assignment #
-EXECUTABLE := test
+EXECUTABLE := assignment2
 
 # the source files to be built
 SOURCES := *.cpp
