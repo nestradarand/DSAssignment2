@@ -10,7 +10,6 @@ Assignment: Assignment 2 Game Of Life
 #include <iostream>
 #include "GameOfLife.h"
 #include "ArrayHelper.h"
-#include "GameRunner.h"
 #include <fstream>
 
 using namespace std;
@@ -169,6 +168,8 @@ int main(int argc, char** argv)
       //counter to keep track of generation number is incremented
       genCount++;
     }
+    if(outputToFile)
+      outputStream << "Population stable, simulation terminated.";
     cout<<"Population stable"<<endl;
   }
   //the following is executed for mirror mode
@@ -206,6 +207,8 @@ int main(int argc, char** argv)
       //increment generation count
       genCount ++;
     }
+    if(outputToFile)
+      outputStream << "Population stable, simulation terminated.";
     cout<<"Population stable"<<endl;
   }
   //the following is executed for doughnut mode
@@ -242,6 +245,8 @@ int main(int argc, char** argv)
       //increment generation count
       genCount ++;
     }
+    if(outputToFile)
+      outputStream << "Population stable, simulation terminated.";
     cout<<"Population stable"<<endl;
   }
   //has user press enter to exit the whole program

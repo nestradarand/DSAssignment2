@@ -86,7 +86,10 @@ second grid.  Then the second grid is saved back to the first grid*/
 void GameOfLife::calculateNextGen()
 {
   makeShadowCopy();
-  arrayHelper -> copyArray(theGrid,previousGrid,rowNum+2,colNum+2);
+  if(checkNumber % 5 == 0)//every five iterations, a copy is made to reference stability
+  {
+    arrayHelper -> copyArray(theGrid,previousGrid,rowNum+2,colNum+2);
+  }
   for(int n = 1; n<rowNum+1;++n)
   {
     for(int m = 1;m<colNum+1;++m)
@@ -118,6 +121,7 @@ void GameOfLife::calculateNextGen()
     }
   }
   saveShadow();
+  checkNumber ++;
 }
 //makes shadow copy of the main grid to the second grid
 void GameOfLife::makeShadowCopy()
@@ -340,7 +344,7 @@ void GameOfLife::createRandomPopulation(float density)
     }
   }
 }
-//checks if the main grid is equal to the previous generation
+//checks if the main grid is equal to the generation from 5 iterations before
 bool GameOfLife::checkStability()// returns false (0) if unstable
 {
   return arrayHelper ->checkEquality(theGrid,previousGrid,rowNum+2,colNum+2);
