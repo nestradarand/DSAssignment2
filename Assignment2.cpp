@@ -11,6 +11,7 @@ Assignment: Assignment 2 Game Of Life
 #include "GameOfLife.h"
 #include "ArrayHelper.h"
 #include <fstream>
+#include <limits>
 
 using namespace std;
 
