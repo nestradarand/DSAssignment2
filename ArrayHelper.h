@@ -15,7 +15,6 @@ Majority of the methods service 2D arrays.  Specifically used in Game Of Life*/
 
 class ArrayHelper
 {
-  int numLine = 1;
 public:
   //default constructor
   ArrayHelper();

@@ -21,7 +21,7 @@ to streamline the manipulation of 2d arrays*/
 class GameOfLife
 {
   ArrayHelper* arrayHelper = new ArrayHelper();
-  int numLine = 1;
+  int numLine = 0;
   char** theGrid;
   char** secondGrid;
   char** previousGrid;

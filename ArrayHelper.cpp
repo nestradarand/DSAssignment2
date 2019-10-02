@@ -80,7 +80,7 @@ void ArrayHelper::fillGrid(char** &grid,int n, int m)
 //Assuming both grids have same dimensions, contents are checked for each grid to check equality
 bool ArrayHelper::checkEquality(char** firstGrid, char** secondGrid,int n,int m)
 {
-  for(int i =0;i<n;++i)
+  for(int i =1;i<n;++i)
   {
     for(int j = 0; j<m;++j)
     {

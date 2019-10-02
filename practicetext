@@ -1,0 +1,73 @@
+Generation 0
+--X--X
+-X---X
+-----X
+X---XX
+------
+Generation 1
+-XX-X-
+----X-
+X-----
+----X-
+-----X
+Generation 2
+-XX-XX
+XX-X--
+------
+-----X
+----X-
+Generation 3
+------
+XX-XXX
+X-----
+-----X
+----X-
+Generation 4
+X---XX
+-X--XX
+-X----
+-----X
+----X-
+Generation 5
+-X-X--
+-X--X-
+----X-
+-----X
+----X-
+Generation 6
+XX-XX-
+--XXX-
+----X-
+----XX
+----X-
+Generation 7
+-----X
+XXX--X
+------
+---XX-
+---XX-
+Generation 8
+XX--X-
+XX---X
+XXXXXX
+---XX-
+--X--X
+Generation 9
+--X-X-
+------
+------
+X-----
+--X---
+Generation 10
+------
+------
+------
+------
+-X----
+Generation 11
+------
+------
+------
+------
+------
+Population stable, simulation terminated.

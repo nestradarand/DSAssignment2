@@ -15,6 +15,7 @@ e. ArrayHelper.cpp
 3.) Description of any known compile/runtime errors, or bugs.
  a. If you type in more than one letter in response to prompts, it will count
  towards "cin" calls later in the program.
+ b. Sometimes the stability check I use randomly preemptively determines stability.
 
 4.) References used to complete the assignment
 a. stackoverflow.com
